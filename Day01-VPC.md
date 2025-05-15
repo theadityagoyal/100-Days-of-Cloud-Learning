@@ -47,20 +47,6 @@ Here is the detailed workflow I performed in the AWS Console:
 
 ---
 
-## LinkedIn Summary
-
-Day 1 of #100DaysOfCloud
-
-Today I created a full custom VPC from scratch using AWS Console:
-- Subnets (Public & Private)
-- IGW, NAT Gateway
-- Route Tables
-- S3 Endpoint
-- DNS Settings
-
-#AWS #VPC #CloudComputing #DevOps #100DaysOfCloud
-
----
 
 ## Screenshot
 
