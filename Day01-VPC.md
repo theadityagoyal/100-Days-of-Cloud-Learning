@@ -58,7 +58,6 @@ Today I created a full custom VPC from scratch using AWS Console:
 - S3 Endpoint
 - DNS Settings
 
-Feeling like a Cloud Engineer already!  
 #AWS #VPC #CloudComputing #DevOps #100DaysOfCloud
 
 ---
