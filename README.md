@@ -1,4 +1,4 @@
-# 100-Days-of-Cloud-Learning ☁️🚀
+# 100-Days-of-Cloud-Learning 
 
 Welcome to my **100 Days of Cloud Learning** journey!  
 Every day, I’ll dive into something new about cloud computing — be it AWS cool cloud tech. I’ll learn, experiment, and share everything here on GitHub.  
