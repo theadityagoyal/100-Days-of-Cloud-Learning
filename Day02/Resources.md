@@ -43,19 +43,6 @@ Yeh file AWS IAM (Identity and Access Management) se related important resources
 
 ---
 
-## Blogs & Articles
-
-- [Introduction to AWS IAM](https://aws.amazon.com/blogs/security/introduction-to-aws-identity-and-access-management-iam/)  
-  AWS official blog explaining IAM fundamentals.
-
-- [Understanding IAM Policies](https://medium.com/nerd-for-tech/understanding-aws-iam-policies-101-6d6f7e4ac90d)  
-  Medium article breaking down IAM policies for beginners.
-
-- [Common IAM Mistakes and How to Avoid Them](https://aws.amazon.com/blogs/security/common-iam-mistakes/)  
-  Important tips on what to avoid while managing IAM.
-
----
-
 ## Forums & Q&A
 
 - [AWS IAM Tag on Stack Overflow](https://stackoverflow.com/questions/tagged/amazon-iam)  
