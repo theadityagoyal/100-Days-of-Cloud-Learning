@@ -1,3 +1,4 @@
+```
 Initializing ultra-secure dark web gateway...
 Processing -
 
@@ -57,3 +58,4 @@ IP Address           | Company Name
 Finalizing operation. Covering tracks...
 Processing |
 Operation complete. Disconnecting and wiping logs...
+```
