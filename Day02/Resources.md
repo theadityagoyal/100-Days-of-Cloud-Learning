@@ -22,7 +22,7 @@ Yeh file AWS IAM (Identity and Access Management) se related important resources
 - [AWS IAM Workshop](https://www.awsworkshops.com/iam/)  
   Hands-on workshop to practice IAM concepts step by step.
 
-- [Practical IAM Policies on GitHub](https://github.com/awslabs/aws-support-tools/tree/master/IAMPolicies)  
+- [Practical IAM Policies on GitHub](https://github.com/awslabs/aws-support-tools)  
   Examples of IAM policies for different use cases.
 
 ---
