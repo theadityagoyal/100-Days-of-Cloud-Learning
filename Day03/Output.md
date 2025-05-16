@@ -50,7 +50,7 @@ Owner: Airtel Broadband Services
 Summary of Extracted IPs and Companies:
 
 IP Address           | Company Name                                     
----------------------+--------------------------------------------------
+---------------------+---------------------------------------------------
 49.37.253.99         | Jio Infocomm Limited                             
 103.27.9.121         | Spectra ISP Private Limited                      
 122.168.122.16       | Airtel Broadband Services                        
@@ -59,3 +59,4 @@ Finalizing operation. Covering tracks...
 Processing |
 Operation complete. Disconnecting and wiping logs...
 ```
+ 

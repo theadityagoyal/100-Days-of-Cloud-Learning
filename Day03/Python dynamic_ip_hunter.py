@@ -12,7 +12,7 @@ MAGENTA = "\033[95m"
 RESET = "\033[0m"
 BOLD = "\033[1m"
 
-spinner_cycle = ['|', '/', '-', '\\']
+spinner_cycle = ['|', '/', '-', '\\'] 
 
 def slow_print(text, delay=0.012):  # Delay kam kiya
     for char in text:
