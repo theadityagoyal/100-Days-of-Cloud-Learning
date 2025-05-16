@@ -6,6 +6,20 @@ In many cost-conscious companies, public IP addresses for critical infrastructur
 
 Imagine you have a load balancer connected to three ISP networks (for example, Jio, Airtel, and Sity). Each ISP assigns dynamic public IPs that can change daily. Meanwhile, your development environment relies on these IPs for SSH access to EC2 instances and connections to RDS databases. Since the IPs change regularly, you need to update your access control lists, security groups, or other configurations daily to keep everything running smoothly.
 
+## Problem Statement
+
+Googling *"What’s my IP?"* might seem easy — but here’s the real issue:
+
+- Many sites don’t give accurate results instantly
+- Sometimes they show cached IPs or your load balancer’s IP
+- And you can’t go around pinging every laptop manually
+
+This script solves that by continuously fetching fresh, real public IPs (until it gets unique ones).  
+It’s especially useful in dynamic or load-balanced environments.
+
+By default, it finds 3 IPs — but you can modify it as per your needs.  
+Just fork the repo or download and tweak it your way 
+
 ## What This Script Does
 
 This Python script automates the process of:
