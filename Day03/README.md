@@ -1,64 +1,77 @@
-# Dynamic IP Hunter — Automating IP Tracking for Dynamic Load Balancers
+# Dynamic IP Hunter — Automating IP Tracking for TP-Link ER605 Load Balancer
 
 ## Overview
+In budget-conscious environments, small to mid-sized companies often avoid static IPs from ISPs due to their recurring cost. Instead, they use **dynamic IPs** provided by consumer-grade routers connected through an **enterprise load balancer like the TP-Link ER605**, which balances internet traffic across multiple ISP lines (e.g., **Jio, Airtel, and Sity**).
 
-In many cost-conscious companies, public IP addresses for critical infrastructure such as AWS load balancers are often dynamic rather than static. This is typically done to save costs, but it introduces a daily operational challenge: the public IPs assigned by different ISPs keep changing.
+However, this introduces an operational headache — **these dynamic public IPs change frequently**, sometimes even daily. This becomes a serious issue when you need to **access AWS resources like EC2 (via SSH) or RDS (via security group whitelisting)** from your internal dev environment.
 
-Imagine you have a load balancer connected to three ISP networks (for example, Jio, Airtel, and Sity). Each ISP assigns dynamic public IPs that can change daily. Meanwhile, your development environment relies on these IPs for SSH access to EC2 instances and connections to RDS databases. Since the IPs change regularly, you need to update your access control lists, security groups, or other configurations daily to keep everything running smoothly.
+---
 
 ## Problem Statement
+Your dev and testing teams need **stable outbound access to AWS EC2 and RDS** environments. But since **your TP-Link ER605 gets different public IPs every day from your three ISPs**, you constantly need to:
 
-Googling *"What’s my IP?"* might seem easy — but here’s the real issue:
+- Track the current public IPs of all three ISP links
+- Identify which IP belongs to which ISP (Jio, Airtel, Sity)
+- Update AWS security groups (for SSH and RDS) with these IPs daily
 
-- Many sites don’t give accurate results instantly
-- Sometimes they show cached IPs or your load balancer’s IP
-- And you can’t go around pinging every laptop manually
+This is tedious and error-prone if done manually.
 
-This script solves that by continuously fetching fresh, real public IPs (until it gets unique ones).  
-It’s especially useful in dynamic or load-balanced environments.
+---
 
-By default, it finds 3 IPs — but you can modify it as per your needs.  
-Just fork the repo or download and tweak it your way 
+## Solution: Dynamic IP Hunter Script
 
-## What This Script Does
+This **Python script** automates the following:
 
-This Python script automates the process of:
+- Fetches the **current public IP addresses** exposed by each WAN interface on the TP-Link ER605 (simulated by outbound calls)
+- Performs **WHOIS lookups** to identify the associated ISP (Jio, Airtel, Sity)
+- Outputs a clean, formatted list of **IP addresses and their ISPs**
+- Can be integrated into an automation pipeline to **update AWS Security Groups**
 
-- Detecting the current public IP addresses used by your load balancer’s ISPs.
-- Performing WHOIS lookups to identify the owner or ISP associated with each IP.
-- Presenting a clean, easy-to-use list of current IPs and their respective owners.
-
-With this information, you can automate updates to your SSH access control, RDS security groups, and other AWS services that rely on IP whitelisting — eliminating manual daily updates and preventing service interruptions.
+---
 
 ## Use Case Scenario
 
-- Your load balancer distributes traffic across three ISP connections, each with a dynamic public IP.
-- Every day, these public IPs can change unpredictably due to the lack of static IPs (to save costs).
-- Your dev environment requires SSH and RDS access restricted to these IPs.
-- Manually tracking and updating IPs is time-consuming and error-prone.
-- Running this script quickly provides the current IP addresses and their ISPs.
-- You feed these IPs into your security groups or firewall rules automatically.
-- SSH and RDS connections remain stable without manual troubleshooting.
+- You have a **TP-Link ER605** load balancer with **3 ISP uplinks**.
+- Each ISP assigns a **dynamic public IP** that may change daily.
+- Your dev and QA teams need access to **EC2 (SSH) and RDS** resources.
+- AWS security groups are configured to **whitelist these dynamic IPs**.
+- This script finds the **latest IPs and their associated ISPs**, so you can:
+  - Update EC2 security groups for SSH
+  - Update RDS security groups for DB connections
+- All done **automatically**, saving time and reducing errors.
 
-The script will simulate scanning “dark web nodes” (just for fun), fetch your public IPs, perform WHOIS queries, and print a table of IP addresses along with their ISP owners.
+---
+
+## How It Works
+
+1. Makes outbound connections (e.g., to `https://api.ipify.org`) via each WAN link (simulated or actual)
+2. Captures **real-time public IPs** (no cached results)
+3. Runs **WHOIS** queries to get ISP info
+4. Outputs a table like:
+
+   | IP Address     | ISP     |
+   |----------------|---------|
+   | 103.34.xx.xx   | Airtel  |
+   | 49.205.xx.xx   | Jio     |
+   | 122.167.xx.xx  | Sity    |
+
+5. Can be extended to **push these IPs to AWS** using CLI/SDK
+
+---
 
 ## Benefits
 
-- Avoid paying extra for static IPs by managing dynamic IPs efficiently.
-- Reduce manual errors and save time in daily environment maintenance.
-- Improve operational reliability of your development environment.
-- Use as a foundational tool to integrate into automation pipelines for continuous updates.
+- Avoid paying for static IPs
+- Eliminate manual daily updates to security groups
+- Keep dev environment stable and connected
+- Allow smooth testing of APIs, CRUD operations on RDS
+- Reduce errors and downtime for the team
+
+---
 
 ## Suggestions for Integration
 
-- Schedule this script to run periodically (e.g., daily via cron).
-- Combine output with AWS CLI or SDK scripts to update security groups automatically.
-- Extend ISP detection rules for your specific network providers.
-- Use as a troubleshooting tool to quickly verify current public IPs used by your infrastructure.
-
-## How to Run
-
-Simply execute:
-
-```bash
-python3 dynamic_ip_hunter.py
+- Run via `cron` daily (or on boot of dev server)
+- Combine with **AWS CLI** commands like:
+  ```bash
+  aws ec2 authorize-security-group-ingress ...
