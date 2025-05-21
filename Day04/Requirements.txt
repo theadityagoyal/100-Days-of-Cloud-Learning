@@ -1,0 +1,23 @@
+AWS CloudTrail Activity Logger - Requirements
+
+1. AWS Account with valid security credentials:
+   - Access Key ID
+   - Secret Access Key
+   - IAM user must have permissions to read CloudTrail logs
+
+2. Linux Ubuntu OS installed (or any Linux distro with bash shell)
+
+3. AWS CLI installed (version 2 recommended)
+   - Installation instructions: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+4. AWS CLI configured with your credentials:
+   Run the command and follow the prompts:
+   $ aws configure
+
+5. Bash shell scripting environment (default in Ubuntu)
+
+6. cloudtrail.sh script file available and executable
+   - Make sure to give execute permissions if needed:
+     $ chmod +x cloudtrail.sh
+
+7. Internet connection to access AWS APIs
