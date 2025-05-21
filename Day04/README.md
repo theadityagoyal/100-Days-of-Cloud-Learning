@@ -1,4 +1,4 @@
-# AWS CloudTrail Activity Logger (Day 4)
+# AWS CloudTrail Activity Logger
 
 ## Problem Statement
 
@@ -82,4 +82,5 @@ This script supports key AWS services and event types, including:
 - **S3:** `PutObject`, `DeleteObject`, `CreateBucket`, `DeleteBucket`
 - **Others:** RDS, Lambda, Secrets Manager, KMS, VPC, and more
 
-You can easily expand or customize the monitored actions by editing the `SERVICE_EVENTS` section inside the script.
+You can easily expand or customize the monitored actions by editing the `SERVICE_EVENTS` section inside the script.  
+The script currently includes all the services I commonly use, but you can adjust the list to add or remove services based on your own AWS environment and requirements.
