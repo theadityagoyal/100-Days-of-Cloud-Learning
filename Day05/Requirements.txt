@@ -1,0 +1,12 @@
+# Required tools (should work in WSL/Linux)
+
+bash         # Shell to run the script
+curl         # To check URL status codes
+awk          # For processing log file
+powershell   # Needed for Windows toast notifications (inside WSL)
+
+# Optional (for automation)
+cron         # To run the script at regular intervals
+
+# Environment
+WSL (Windows Subsystem for Linux)
