@@ -12,13 +12,14 @@ chmod +x /full/path/to/monitor.sh
 Replace /full/path/to/monitor.sh with your actual script path.
 
 ## Step 2: Open your crontab editor
-
-- crontab -e
+```bash
+crontab -e
+``` 
 
 If asked, choose your preferred text editor (e.g., nano).
 
 ## Step 3: Add a cron job
-- Add the following line at the end of the file:
+Add the following line at the end of the file:
 
 ```bash
 */10 * * * * /full/path/to/monitor.sh
@@ -37,9 +38,9 @@ If asked, choose your preferred text editor (e.g., nano).
 - Your script will append results to the log file (e.g., ~/url_monitor.log).
 
 ## To view logs, run:
-
-- cat ~/url_monitor.log
-
+```bash
+cat ~/url_monitor.log
+```
 ## Notes
 - Ensure the script path is absolute.
 
