@@ -1,4 +1,4 @@
-# 🌐 URL Watcher with Windows Toasts 
+# URL Watcher with Windows Toasts 
 
 Ever wondered if your APIs, dashboards, or portals were secretly down while you were sipping chai? ☕  
 This script is your cool little watchdog. It checks the status of all your favorite URLs and **pops toast notifications on Windows** (yes, from inside WSL!).
@@ -15,7 +15,7 @@ This script automatically pings all your URLs and alerts you with a toast notifi
 
 ---
 
-## 🔧 Features
+## Features
 
 - Checks multiple URLs using `curl`.
 - Sends **Windows toast notifications** using PowerShell inside WSL.
@@ -25,7 +25,7 @@ This script automatically pings all your URLs and alerts you with a toast notifi
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### 1. Clone the repo
 
