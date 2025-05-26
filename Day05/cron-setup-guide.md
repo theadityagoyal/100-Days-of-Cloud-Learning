@@ -1,6 +1,6 @@
 # How to Schedule `monitor.sh` Script with Cron
 
-This guide explains how to use **cron** to run your `monitor.sh` script automatically at regular intervals.
+This guide explains how to use **cron** to run your `monitor_toast.sh` script automatically at regular intervals.
 
 ---
 
@@ -22,7 +22,7 @@ If asked, choose your preferred text editor (e.g., nano).
 Add the following line at the end of the file:
 
 ```bash
-*/10 * * * * /full/path/to/monitor.sh
+*/10 * * * * /full/path/to/monitor-toast.sh
 ```
 
 - This runs the script every 10 minutes. Change */10 to any other interval as needed:
