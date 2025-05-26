@@ -1,6 +1,6 @@
 # URL Watcher with Windows Toasts 
 
-Ever wondered if your APIs, dashboards, or portals were secretly down while you were sipping chai? ☕  
+Ever wondered if your APIs, dashboards, or portals were secretly down while you were sipping chai?  
 This script is your cool little watchdog. It checks the status of all your favorite URLs and **pops toast notifications on Windows** (yes, from inside WSL!).
 
 ---
