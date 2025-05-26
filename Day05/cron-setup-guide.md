@@ -1,4 +1,4 @@
-# How to Schedule `monitor.sh` Script with Cron
+# How to Schedule `monitor-toast.sh` Script with Cron
 
 This guide explains how to use **cron** to run your `monitor_toast.sh` script automatically at regular intervals.
 
