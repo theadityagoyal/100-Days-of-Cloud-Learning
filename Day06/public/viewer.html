@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Viewer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>👀 Keystroke Viewer</header>
+  <div class="container">
+    <input type="text" id="roomIdInput" placeholder="Enter Room ID">
+    <button id="joinRoom">Join Room</button>
+    <div class="keystroke-log" id="log"></div>
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <script>
+    let ws;
+
+    document.getElementById("joinRoom").onclick = () => {
+      const roomId = document.getElementById("roomIdInput").value.trim();
+      if (!roomId) return alert("Enter room ID");
+
+      ws = new WebSocket(`ws://${location.host}`);
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ type: 'join', role: 'viewer', roomId }));
+      };
+
+      ws.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+
+        if (msg.type === 'joined') {
+          log(`✅ Connected to room: ${msg.roomId}`);
+          setInterval(() => {
+            ws.send(JSON.stringify({ type: 'request-stats' }));
+          }, 5000);
+        }
+        if (msg.type === 'live-keystroke') {
+          log(`Key: ${msg.payload.key}`);
+        }
+        if (msg.type === 'stats') {
+          document.getElementById("stats").innerText = `Viewers connected: ${msg.viewers}`;
+        }
+        if (msg.type === 'sharer-left') {
+          log(`❌ Sharer has left the room`);
+        }
+      };
+    };
+
+    function log(text) {
+      const div = document.getElementById("log");
+      div.innerHTML += `<div>${text}</div>`;
+      div.scrollTop = div.scrollHeight;
+    }
+  </script>
+</body>
+</html>

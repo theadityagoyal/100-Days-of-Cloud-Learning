@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Keystroke Share — Sharer</title>
+  <style>
+    body{font-family:Arial;padding:20px}
+    #log{height:160px;overflow:auto;border:1px solid #ddd;padding:8px;border-radius:6px}
+    .box{margin:8px 0}
+    .small{font-size:0.9rem;color:#555}
+    .secret{font-family:monospace;background:#f5f5f5;padding:6px;border-radius:4px}
+  </style>
+</head>
+<body>
+  <h2>Keystroke Share — Create Session</h2>
+  <p class="small">Yeh consent-based sharing demo hai. Pehle session create karo, phir token share karke viewer ko link bhejo.</p>
+
+  <div class="box">
+    <button id="btnCreate">Create Session</button>
+  </div>
+
+  <div id="session" style="display:none">
+    <p>Share this link with viewers (or use ngrok HTTPS + path):</p>
+    <div class="box">
+      <div id="viewerLink" class="secret"></div>
+    </div>
+    <p>Sharer token (keep secret) — use below to start sharing:</p>
+    <div class="box"><span id="token" class="secret"></span></div>
+
+    <div class="box">
+      <label>Your name: <input id="name" placeholder="optional"></label>
+    </div>
+
+    <div class="box">
+      <button id="start">Start Sharing</button>
+      <button id="stop" disabled>Stop Sharing</button>
+    </div>
+
+    <h4>Local live log (you):</h4>
+    <div id="log"></div>
+  </div>
+
+  <script src="/common.js"></script>
+  <script>
+    const btnCreate = document.getElementById('btnCreate');
+    const sessionDiv = document.getElementById('session');
+    const viewerLinkEl = document.getElementById('viewerLink');
+    const tokenEl = document.getElementById('token');
+    const startBtn = document.getElementById('start');
+    const stopBtn = document.getElementById('stop');
+    const log = document.getElementById('log');
+    const nameInput = document.getElementById('name');
+
+    let roomId, token, ws;
+
+    function append(text){ const d=document.createElement('div'); d.textContent=text; log.appendChild(d); log.scrollTop=log.scrollHeight; }
+
+    btnCreate.onclick = async () => {
+      const res = await fetch('/api/new-room', { method:'POST' });
+      const j = await res.json();
+      roomId = j.roomId; token = j.token;
+      // viewer path: /viewer.html?room=ROOMID
+      const viewerPath = `${location.origin}/viewer.html?room=${roomId}`;
+      viewerLinkEl.textContent = viewerPath;
+      tokenEl.textContent = token;
+      sessionDiv.style.display = 'block';
+      append('Session created: ' + roomId);
+      append('Share viewer link with people you want to allow to watch (but only start sharing when they have consented).');
+    };
+
+    startBtn.onclick = () => {
+      if (!roomId || !token) { alert('Create a session first'); return; }
+      if (ws && ws.readyState === WebSocket.OPEN) return;
+      ws = createWS();
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ type:'join', role:'sharer', roomId, token }));
+        startBtn.disabled = true; stopBtn.disabled = false;
+        append('Sharing started. Type anywhere in this window.');
+      };
+      ws.onmessage = (ev) => {
+        // no incoming from server for sharer in this demo
+        console.log('srv:', ev.data);
+      };
+      ws.onclose = () => { append('Connection closed'); startBtn.disabled=false; stopBtn.disabled=true; }
+      window.addEventListener('keydown', onKey);
+    };
+
+    stopBtn.onclick = () => {
+      if (ws) ws.close();
+      window.removeEventListener('keydown', onKey);
+      startBtn.disabled=false; stopBtn.disabled=true;
+      append('Sharing stopped.');
+    };
+
+    function onKey(e){
+      if (!ws || ws.readyState !== WebSocket.OPEN) return;
+      const payload = { type:'keystroke', key:e.key, code:e.code, ts:Date.now(), username: nameInput.value || null };
+      ws.send(JSON.stringify(payload));
+      append(`you: ${payload.key}`);
+    }
+  </script>
+</body>
+</html>
